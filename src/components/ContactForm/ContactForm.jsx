@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Label, Input, Button } from './ContactForm.styled';
+import PropTypes from 'prop-types';
 
 class ContactForm extends Component {
   state = {
@@ -12,10 +13,11 @@ class ContactForm extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
     this.props.onSubmit(this.state);
+
     this.reset();
   };
+
   reset = () => {
     this.setState({ name: '', number: '' });
   };
@@ -54,5 +56,15 @@ class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  state: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+  }),
+  handleFormChange: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  reset: PropTypes.func,
+};
 
 export default ContactForm;

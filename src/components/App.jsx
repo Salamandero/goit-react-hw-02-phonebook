@@ -19,16 +19,23 @@ class App extends Component {
   addFormContact = data => {
     const newContact = { id: nanoid(), ...data };
     const newName = newContact.name;
+
     const proofName = Object.values(this.state.contacts).map(
       contact => contact.name
     );
     if (proofName.includes(newName)) {
       return alert(`${newName} is already in contacts.`);
     }
+
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact],
+      contacts: [newContact, ...prevState.contacts],
     }));
+
+    // return this.reset();
   };
+  // reset = () => {
+  //   this.setState({ name: '', number: '' });
+  // };
 
   changeFilter = event => {
     this.setState({ filter: event.currentTarget.value });
@@ -45,7 +52,6 @@ class App extends Component {
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
-
   render() {
     const { filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
